@@ -103,5 +103,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+#hub
+jupyterhub*
+
 #DS_Store
 .DS_Store
