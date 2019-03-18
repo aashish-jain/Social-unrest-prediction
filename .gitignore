@@ -108,3 +108,6 @@ jupyterhub*
 
 #DS_Store
 .DS_Store
+
+#Credntials
+.credentials
