@@ -110,8 +110,11 @@ venv.bak/
 #hub
 jupyterhub*
 
-#DS_Store
+# DS_Store
 .DS_Store
 
-#Credntials
+# Credentials
 .credentials
+
+# VS Code
+.vscode/
