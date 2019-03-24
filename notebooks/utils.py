@@ -74,7 +74,7 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5)
         raise FileNotFoundError
     
     df['event_date'] = pd.to_datetime(df['event_date'])
-    df = df[df['event_date'] >= pd.to_datetime("22-feb-2019")]
+    df = df[df['event_date'] >= pd.to_datetime("23-feb-2019")]
     
     df.sort_values(by=['event_date'], inplace=True)
     
