@@ -74,6 +74,8 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5)
         raise FileNotFoundError
     
     df['event_date'] = pd.to_datetime(df['event_date'])
+    df = df[df['event_date'] >= pd.to_datetime("22-feb-2019")]
+    
     df.sort_values(by=['event_date'], inplace=True)
     
     start, end = df.iloc[0]['event_date'], df.iloc[-1]['event_date']
@@ -85,7 +87,11 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5)
     label_dict = {}
 
     for city in cities_to_process:
+        print(city)
         city_df = df[df["location"] == city]
         num_events = np.zeros(len(dates))
         for i, date in enumerate(dates):
             num_events[i] += len(city_df[city_df['event_date'] == date])
+        labels = generate_labels(num_events, lead_days, days_window)
+        label_dict[city] = labels
+    return label_dict
