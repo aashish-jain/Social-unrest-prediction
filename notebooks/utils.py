@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from collections import Counter
+
 
 def get_glove_dict():
     """
@@ -95,3 +97,41 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5)
         labels = generate_labels(num_events, lead_days, days_window)
         label_dict[city] = labels
     return label_dict
+
+
+def plot_counter(arr, num_elements=10, reverse=True, xlabel="", ylabel="", title=""):
+    """
+    Input - 
+        arr - This could be an list/np.ndarray/pd.Series etc
+        num_elements - Number of elements needed to be plotted,
+                       default value = 10
+        reverse - The ordering for Counter elements, defaule value
+                  = True
+        xlabel, ylabel, title - plt params
+
+
+    Returns - Plot the bar graph accordingly
+    """
+    # Get counter
+    counter = Counter(arr)
+    
+    # Sort as per criterion given in function definition
+    counter = sorted(counter.items(), key=lambda x: x[1], reverse=reverse)[:num_elements]
+    
+    counter = np.array(counter)
+
+    things , counts = counter[:, 0].tolist(), counter[:, 1].astype(np.float32)
+    indices = np.arange(len(counts))
+    width = 1
+
+
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+
+    plt.xticks(indices, things)
+    plt.title(title)
+
+    # Matplotlib magic
+    plt.rcParams['figure.figsize'] = (20, 10)
+    plt.rcParams['figure.figsize'] = (20, 10)
+    _ = plt.bar(indices, counts, 0.5)
