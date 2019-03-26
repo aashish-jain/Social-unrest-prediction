@@ -1,11 +1,14 @@
 import pandas as pd
+from nlp_utils import get_sentiment
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
 
 def clean_df(df):
     """
     Input - A df of tweets
     Returns - A df that cleans the input 
              df and returns it.
+    TODO - Vectorize this.
     """
     rows_to_drop = []
     for i in range(len(df)):
@@ -19,28 +22,22 @@ def clean_df(df):
         
         if curr_row['lang'] == '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>':
             rows_to_drop.append(i)
+
     print ("Dropping", len(rows_to_drop), "rows!")
     if len(rows_to_drop) == 0:
         return df
     return df.drop(rows_to_drop)
 
 
-def get_sentiment(df):
+def get_tweet_sentiment(df):
     """
     Input - A dataframe of tweets from the CSV file.
     Returns - A df with an extra sentiment column.
     """
-    vader = SentimentIntensityAnalyzer()
-    
     tweets = df['full_text']
-
     tweet_ids = [str(int(x)) for x in df['id']]
     
-    sentiment_dict = {}
-
-    for i, tweet in enumerate(tweets):
-        if tweet_ids[i] not in sentiment_dict:
-            sentiment_dict[tweet_ids[i]] = vader.polarity_scores(tweet)
+    sentiment_dict = get_sentiment(tweets, tweet_ids)
 
     neg, pos, neu, compound = [], [], [], []
 
@@ -60,7 +57,7 @@ def get_sentiment(df):
     return df
 
 
-def tweets_by_day(df, min_date=None, max_date=None):
+def get_docs_by_day(df, min_date=None, max_date=None):
     """
     Input - A df with created_at column
            converted by pd.to_datetime
@@ -73,6 +70,7 @@ def tweets_by_day(df, min_date=None, max_date=None):
     if max_date is None:
         max_date = max(df['created_at']).date()
     
+
     date_dict = {}
     
     assert(max_date > min_date)
@@ -83,14 +81,21 @@ def tweets_by_day(df, min_date=None, max_date=None):
     
     df['date'] = dates
     
-    for date in dates:
-        date_dict[str(date)] = df[df['date'] == date]
+    for date in date_range:
+        tweets = df[df['date'] == date.date()]
+        
+        if len(tweets) == 0:
+            date_dict[str(date)] = None
+        else:
+            date_dict[str(date)] = tweets
+
     del df['date']
     return date_dict
 
-def get_tweets_by_location(df):
+
+def get_docs_by_location(df):
     """
-    Input - Tweets DF with location
+    Input - Documents DF with location
     Returns - Dict with location as key and tweets
               as the value
     """
@@ -103,4 +108,25 @@ def get_tweets_by_location(df):
     
     return location_dict
 
+
+def interleave_location_and_date(df, start_date, end_date):
+    """
+    Input - 
+            df - A DF with documents
+            start_date & end_date - Date maxima
+
+    Returns - A 2-level dict with location as
+              key and second level key as dates
+              for feature extraction across the 2
+    """
+    assert(start_date < end_date)
     
+    location_dict = get_docs_by_location(df)
+    location_date_dict = {}
+
+    for location in location_dict.keys():
+        print(location)
+        date_dict = get_docs_by_day(location_dict[location], start_date, end_date)
+        location_date_dict[location] = date_dict
+
+    return location_date_dict

@@ -1,7 +1,8 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 from collections import Counter
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 
 def get_glove_dict():
@@ -89,7 +90,6 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5)
     label_dict = {}
 
     for city in cities_to_process:
-        print(city)
         city_df = df[df["location"] == city]
         num_events = np.zeros(len(dates))
         for i, date in enumerate(dates):
