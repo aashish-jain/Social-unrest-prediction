@@ -17,9 +17,18 @@ def clean_df(df):
         if pd.isna(curr_row['id']):
             rows_to_drop.append(i)
         
-        if (pd.isna(curr_row['full_text'])) or pd.isna(curr_row['created_at']) or not str(curr_row['created_at']).endswith("2019"):
+        if (pd.isna(curr_row['full_text'])) or pd.isna(curr_row['created_at']):
             rows_to_drop.append(i)
         
+        if isinstance(curr_row['created_at'], pd._libs.tslibs.timestamps.Timestamp):
+            if curr_row['created_at'].year != 2019:
+                rows_to_drop.append(i)
+
+        elif isinstance(curr_row['created_at'], str):
+            if "2019" not in curr_row['created_at']:
+                rows_to_drop.append(i)
+            
+
         if curr_row['lang'] == '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>':
             rows_to_drop.append(i)
 
