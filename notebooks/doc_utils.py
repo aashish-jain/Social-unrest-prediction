@@ -7,8 +7,8 @@ def clean_df(df):
     """
     Input - A df of tweets
     Returns - A df that cleans the input 
-             df and returns it.
-    TODO - Vectorize this.
+             df and returns it
+    TODO - Vectorize this
     """
     rows_to_drop = []
     for i in range(len(df)):
@@ -31,8 +31,9 @@ def clean_df(df):
 
 def get_tweet_sentiment(df):
     """
-    Input - A dataframe of tweets from the CSV file.
-    Returns - A df with an extra sentiment column.
+    Input - A dataframe of tweets from the CSV file
+    Returns - A df with an extra sentiment column
+    TODO - Process only for unique tweets
     """
     tweets = df['full_text']
     tweet_ids = [str(int(x)) for x in df['id']]
@@ -115,9 +116,10 @@ def interleave_location_and_date(df, start_date, end_date):
             df - A DF with documents
             start_date & end_date - Date maxima
 
-    Returns - A 2-level dict with location as
-              key and second level key as dates
-              for feature extraction across the 2
+    Returns - A 2-level dict with location as a
+              level one key and second level key as 
+              dates for feature extraction across 
+              the 2 dates
     """
     assert(start_date < end_date)
     
