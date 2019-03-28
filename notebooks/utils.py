@@ -11,14 +11,23 @@ def get_glove_dict(glove_path="../../glove_vectors/glove.6B.300d.txt"):
 
     Create a dict with word as key and word vector as value
     """
+
+    # Initialize dict
     d = {}
+
+    # Read file
     f = open("../../glove_vectors/glove.6B.300d.txt", 'r')
+
+    # For each row, generate word to vector mapping
     for row in f:
         row = row.replace('\n', '').split(" ")
         word = row[0]
         vector = np.array([float(x) for x in row[1:]])
         d[word] = vector
+    
+    # Close file pointer
     f.close()
+
     return d
 
 def generate_labels(num_events, lead_days=2, days_window=2):
@@ -39,10 +48,17 @@ def generate_labels(num_events, lead_days=2, days_window=2):
     
     TODO - Maybe implement this with np.stride_tricks?
     """
+
+    # Number of events
     n = len(num_events)
+
+    # Initialize the labels ndarray for [n - lead_days - days_window] days
     labels = np.zeros(n - lead_days - days_window)
+
+    # Populate labels ndarray
     for i in range(n - lead_days - days_window):
         labels[i] = 1.0 if sum(num_events[i + lead_days: i + lead_days + days_window] > 0) else 0.0
+
     return labels
 
 def get_cities(df, top_locations):
@@ -51,9 +67,14 @@ def get_cities(df, top_locations):
     Returns - String of cities requested based on
               top_locations in process_acled_csv(..)
     """
+    # Get Counter for locations in DF
     counter = Counter(df.location)
+
+    # If top_locations is -1, send all 
     if top_locations == -1:
         return list(counter.keys())
+
+    # Else, send for top_locations
     counter = sorted(counter.items(), key=lambda x: -x[1])[:top_locations]
     return [x[0] for x in counter]
 
@@ -78,17 +99,20 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5,
     except:
         raise FileNotFoundError
 
+    # Convert to pandas DateTime object
     df['event_date'] = pd.to_datetime(df['event_date'])
+
+    # Sort by event_date
     df.sort_values(by=['event_date'], inplace=True)
 
-    # As the data is sorted, we can do this:
+    # As the data is sorted, we can do this -
     if start is None:
         start = df.iloc[0]["event_date"]
     
     if end is None:
         start = df.iloc[-1]["event_date"]
 
-    # Convert to DateTime object
+    # Convert to DateTime object if str
     if isinstance(start, str):
         start = pd.to_datetime(start)
 
@@ -112,11 +136,20 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5,
     # Generate number of events, labels and add to
     # mapping
     for city in cities_to_process:
+        # Get DF for city
         city_df = df[df["location"] == city]
+
+        # Initialize events
         num_events = np.zeros(len(dates))
+
+        # Populate the above ndarray for each date
         for i, date in enumerate(dates):
             num_events[i] += len(city_df[city_df['event_date'] == date])
+        
+        # Generate labels based on lead_days & days_window
         labels = generate_labels(num_events, lead_days, days_window)
+
+        # Generate mapping between city & labels
         label_dict[city] = labels
     
     return label_dict
@@ -156,6 +189,7 @@ def plot_counter(arr, num_elements=10, reverse=True, xlabel="", ylabel="", title
     plt.xticks(indices, things)
     plt.title(title)
 
+    # Set plot size
     plt.rcParams['figure.figsize'] = (20, 10)
 
     # Plot bar chart

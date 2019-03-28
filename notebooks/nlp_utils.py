@@ -102,6 +102,7 @@ def make_predictions(location_features_dict, labels, model=None, permute=False, 
     # Add them to the existing result table
     result_table.append(["Average"] + averages.tolist())
     
+    # Print tabulated result
     print(
         tabulate(result_table,
                ["Location", "Train Accuracy", "Test Accuracy",
@@ -117,20 +118,27 @@ def make_predictions(location_features_dict, labels, model=None, permute=False, 
 def get_features(date_dict):
     """
     Input: date_dict to compute features for each date
-    Returns: Features for each dateg
+    Returns: Features for each date
     """
+    # Initialize list for features
     features = []
+
+    # Iterate through dates
     for date in date_dict:
         feature_row = []
         docs = date_dict[date]
+
+        # If no rows are present, add zero-row
         if docs is None:
             feature_row = [0] * 6
         else:
+            # Compute features
             feature_row.append(len(docs))
             mean = docs.mean()
 
             feature_row.extend([mean['pos'], mean['neg'], mean['neu'], mean['compound']])
             feature_row.append(len(docs[docs['neg'] > 0]))
-
+        
+        # Add feature_row to above list
         features.append(feature_row)
     return features
