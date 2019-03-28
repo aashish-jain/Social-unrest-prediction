@@ -1,9 +1,8 @@
-from collections import Counter
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from collections import Counter
 
 def get_glove_dict(glove_path="../../glove_vectors/glove.6B.300d.txt"):
     """
@@ -84,9 +83,10 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5,
 
     # As the data is sorted, we can do this:
     if start is None:
-        start = pd.iloc[0]["event_date"]
+        start = df.iloc[0]["event_date"]
+    
     if end is None:
-        start = pd.iloc[-1]["event_date"]
+        start = df.iloc[-1]["event_date"]
 
     # Convert to DateTime object
     if isinstance(start, str):
@@ -94,13 +94,14 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5,
 
     if isinstance(end, str):    
         end = pd.to_datetime(end)
-
+    
+    # Chop data with start & end dates
     df = df[df['event_date'] >= start]
     df = df[df['event_date'] <= end]
 
     # Generate date range for creating labels
     dates = pd.date_range(start=start, end=end)
-    print("Data from", start, "to", end, " & Number of days -", len(dates))
+    print("Data from", start.date(), "to", end.date(), " & Number of days -", len(dates))
 
     # Get names of cities
     cities_to_process = get_cities(df, top_locations)
@@ -140,18 +141,22 @@ def plot_counter(arr, num_elements=10, reverse=True, xlabel="", ylabel="", title
     # Sort as per criterion given in function definition
     counter = sorted(counter.items(), key=lambda x: x[1], reverse=reverse)[:num_elements]
 
+    # Convert to ndarray
     counter = np.array(counter)
 
+    # Get things and count
     things , counts = counter[:, 0].tolist(), counter[:, 1].astype(np.float32)
+
+    # Generate indices
     indices = np.arange(len(counts))
-    width = 1
 
-
+    # Add labels, xticks & title
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-
     plt.xticks(indices, things)
     plt.title(title)
 
     plt.rcParams['figure.figsize'] = (20, 10)
+
+    # Plot bar chart
     _ = plt.bar(indices, counts, 0.5)
