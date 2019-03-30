@@ -7,7 +7,7 @@ CSE635 Project.
 </p>
 
 
-## Things to TODO 
+## TODO list
 
 * Try CatBoost / XGBoost / Neural nets (CNN/ LSTM/ DNN)
 * Add hate speech & violent speech detection
