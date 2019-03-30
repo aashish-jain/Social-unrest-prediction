@@ -5,3 +5,11 @@
 <p>
 CSE635 Project.
 </p>
+
+
+## Things to TODO 
+
+* Try CatBoost / XGBoost / Neural nets (CNN/ LSTM/ DNN)
+* Add hate speech & violent speech detection
+* Do lit survey for more features
+  * Go back to Terra Blevins paper maybe?
