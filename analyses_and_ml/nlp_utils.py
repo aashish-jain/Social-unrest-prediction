@@ -74,7 +74,7 @@ def make_predictions(location_features_dict, labels, model=None, permute=False, 
 
         # Default model
         if model is None:
-            model = ExtraTreesClassifier(n_estimators=100, n_jobs=-1)
+            model = ExtraTreesClassifier(n_estimators=200, n_jobs=-1)
 
         # Fit the train data
         model.fit(xtrain, ytrain)
@@ -94,7 +94,7 @@ def make_predictions(location_features_dict, labels, model=None, permute=False, 
                       np.round(train_acc, 2), np.round(test_acc, 2),
                       np.round(precision, 2), np.round(recall, 2),
                       np.round(f1, 2),
-                      np.sum(y) * 100. / len(y)]
+                      np.round(np.sum(y) * 100. / len(y), 2)]
         result_table.append(result_row)
 
     # Average stats
@@ -105,20 +105,18 @@ def make_predictions(location_features_dict, labels, model=None, permute=False, 
     # Add them to the existing result table
     result_table.append(["Average"] + averages.tolist())
 
-    # Print tabulated result
+    # Header for table
     header = ["Location", "Train Accuracy", "Test Accuracy",
               "Precision", "Recall", "F1 Score", "% of +'s in data"]
-
-    print(
-        tabulate(result_table,
-                 header,
-                 tablefmt="github",
-                 stralign="center")
-    )
-
+    
+    # Print tabulated result
+    print(tabulate(result, 
+                   tablefmt="pipe", 
+                   stralign="center", 
+                   headers=header))
+    
     # Unsuppress warning
     warnings.filterwarnings("default")
-
 
 def get_features(date_dict):
     """
