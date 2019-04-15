@@ -1,6 +1,6 @@
 import pandas as pd
 
-from .nlp_utils import get_sentiment
+from nlp_utils import get_sentiment
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
