@@ -6,6 +6,11 @@ __pycache__/
 #Datafiles
 *.csv
 *.pkl
+*.npy
+*.json
+
+#Model weights
+*.d2v
 
 # C extensions
 *.so
