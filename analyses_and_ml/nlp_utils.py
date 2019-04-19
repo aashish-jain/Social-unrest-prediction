@@ -74,7 +74,7 @@ def make_predictions(location_features_dict, labels, model=None, permute=False, 
 
         # Default model
         if model is None:
-            model = ExtraTreesClassifier(n_estimators=200, n_jobs=-1)
+            model = xgboost.XGBClassifier(n_estimators=200, n_jobs=-1)
 
         # Fit the train data
         model.fit(xtrain, ytrain)
@@ -90,33 +90,40 @@ def make_predictions(location_features_dict, labels, model=None, permute=False, 
         f1 = f1_score(ytest, ypred)
 
         # Add row to result_table
-        result_row = [common_location,
+        result_row = [
+                      common_location,
                       np.round(train_acc, 2), np.round(test_acc, 2),
                       np.round(precision, 2), np.round(recall, 2),
-                      np.round(f1, 2),
-                      np.round(np.sum(y) * 100. / len(y), 2)]
+                      np.round(f1, 2), np.round(np.sum(y) / len(y), 2)
+                     ]
+                      
         result_table.append(result_row)
 
     # Average stats
     # Turns out median is kind of useless
     result_table_copy = (np.array(result_table)[:, 1:]).astype(np.float32)
     averages = np.round(np.mean(result_table_copy, axis=0), 2)
+    
+    # Sort by test accuracy
+    result_table = sorted(result_table, key=lambda x: -x[-2])
+
 
     # Add them to the existing result table
     result_table.append(["Average"] + averages.tolist())
 
     # Header for table
     header = ["Location", "Train Accuracy", "Test Accuracy",
-              "Precision", "Recall", "F1 Score", "% of +'s in data"]
+              "Precision", "Recall", "F1 Score", "+'s in data"]
     
     # Print tabulated result
-    print(tabulate(result, 
+    print(tabulate(result_table, 
                    tablefmt="pipe", 
                    stralign="center", 
                    headers=header))
     
     # Unsuppress warning
     warnings.filterwarnings("default")
+    return
 
 def get_features(date_dict):
     """
