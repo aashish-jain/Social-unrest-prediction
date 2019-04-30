@@ -123,3 +123,7 @@ jupyterhub*
 
 # VS Code
 .vscode/
+
+# Angular app
+node_modules/
+e2e/
