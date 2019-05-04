@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Election Violence and Social Unrest Prediction';
-  myDate = new Date();
 }

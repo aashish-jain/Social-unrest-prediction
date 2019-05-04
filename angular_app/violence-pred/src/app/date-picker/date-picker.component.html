@@ -3,4 +3,20 @@
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-select [(ngModel)]="locationValue" name="location" placeholder="Choose a location">
+      <mat-option *ngFor="let location of locations" [value]="location.value">
+        {{location.viewValue}}
+      </mat-option>
+    </mat-select>      
+</mat-form-field>
+<br><br><br>
+<button mat-raised-button color="primary" (click)="onClickGo()">Go!</button>
+<br><br><br>
+<div class="mat-display-1" *ngIf = disp>
+    Date selected is: <div class = "result">{{dateString}}</div>. Location selected is: <div class = "result">{{locationValue}}</div>
+  <br><br>
+  The probability of occurence of an event is: <div class = "result">{{result}}</div>
+</div>
 

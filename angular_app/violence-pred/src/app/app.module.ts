@@ -7,6 +7,10 @@ import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { HttpClientModule }    from '@angular/common/http';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @NgModule({
    declarations: [
@@ -19,7 +23,10 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
       MatDatepickerModule, MatInputModule,MatNativeDateModule,
       FormsModule,
       ReactiveFormsModule,
-      AppRoutingModule
+      AppRoutingModule,
+      HttpClientModule,
+      MatSelectModule,
+      MatButtonModule
    ],
    providers: [],
    bootstrap: [AppComponent]
