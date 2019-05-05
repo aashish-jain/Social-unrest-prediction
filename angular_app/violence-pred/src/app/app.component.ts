@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 @Component({
@@ -6,6 +6,16 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'Election Violence and Social Unrest Prediction';
+  links = [{path: 'unrest-map', label: 'Unrest Map'}, {path: 'date-location-prediction', label: 'Location-wise Prediction'}]; 
+  activeLink
+
+  ngOnInit() {
+    this.activeLink = this.links[0];
+  }
+
+
 }
+

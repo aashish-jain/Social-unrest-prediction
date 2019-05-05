@@ -1,0 +1,13 @@
+agm-map {
+    /* height: 800px; */
+    width: 700px; height: 800px; margin:0px auto; display:inline-block; 
+   }
+
+.form{
+    padding: 0.8cm;
+    width: fit-content;
+    margin-bottom: 1.3cm;
+    margin-top: 0.8cm;
+    margin-left: auto;
+    margin-right: auto;
+}

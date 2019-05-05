@@ -1,4 +1,6 @@
-<mat-form-field class="example-full-width">
+<br>
+<div class="form" [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+<mat-form-field>
   <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="date" >
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
@@ -6,17 +8,16 @@
   <br>
   <mat-form-field>
     <mat-select [(ngModel)]="locationValue" name="location" placeholder="Choose a location">
-      <mat-option *ngFor="let location of locations" [value]="location.value">
-        {{location.viewValue}}
+      <mat-option *ngFor="let location of locations" [value]="location">
+        {{location}}
       </mat-option>
     </mat-select>      
 </mat-form-field>
-<br><br><br>
+<br><br>
 <button mat-raised-button color="primary" (click)="onClickGo()">Go!</button>
-<br><br><br>
+</div>
 <div class="mat-display-1" *ngIf = disp>
     Date selected is: <div class = "result">{{dateString}}</div>. Location selected is: <div class = "result">{{locationValue}}</div>
-  <br><br>
-  The probability of occurence of an event in the next 5 days is: <div class = "result">{{result}}</div>
+  <br>
+  The probability of occurence of an event in the next 5 days is: <div class = "result" style = "font-size: 0.6cm">{{result}}</div>
 </div>
-
