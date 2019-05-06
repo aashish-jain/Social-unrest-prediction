@@ -1,0 +1,17 @@
+<div style="align-self: center">
+  <br>
+  <div class="form" [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+    <mat-form-field>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="date" >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br><br>
+    <button mat-raised-button color="primary" (click)="onClickGo()">Go!</button>
+  </div>
+  <br>
+<agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng" style="align-self: center; margin-bottom: 1cm" [maxZoom]="zoom" [minZoom]="zoom" *ngIf = disp>
+  <!-- <agm-marker  [latitude]="lat" [longitude]="lng"></agm-marker> -->
+  <agm-circle   [latitude]="result.lat" [longitude]="result.lon" [radius] = result.probability*100000 [fillColor]="'#ff0000'" [fillOpacity]="result.probability"  *ngFor="let result of results"></agm-circle>
+</agm-map>
+</div>
