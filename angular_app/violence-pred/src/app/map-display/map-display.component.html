@@ -14,7 +14,6 @@
   Map of India showing unrest between <div class = "result">{{date1String}}</div> and <div class = "result">{{date2String}}</div>.
 </div> 
 <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng" style="align-self: center; margin-bottom: 1cm; margin-top: -0.5cm" [maxZoom]="zoom" [minZoom]="zoom" *ngIf = disp>
-  <!-- <agm-marker  [latitude]="lat" [longitude]="lng"></agm-marker> -->
   <agm-circle   [latitude]="result.lat" [longitude]="result.lon" [radius] = (result.probability)*50000 [fillColor]="'#ff0000'" [fillOpacity]=result.probability*0.7  *ngFor="let result of results"></agm-circle>
 </agm-map>
 </div>
