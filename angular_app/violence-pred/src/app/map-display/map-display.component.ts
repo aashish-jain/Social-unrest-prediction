@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export interface Result {
   lat: number;
   lon: number;
-  probaility: number;
+  probability: number;
 }
 
 @Component({
@@ -14,13 +14,17 @@ export interface Result {
 })
 export class MapDisplayComponent implements OnInit {
 
-  maxDate = new Date(2020, 4, 0);
-  minDate = new Date(2016, 1, 0);
-  date = new Date(2020, 1, 0);
+  maxDate = new Date(2019, 4, 3);
+  minDate = new Date(2019, 1, 23);
+  date = new Date(2019, 4, 3);
   dateString : string;
+  date1String : string;
+  date2String : string;
   results : Result[];
   resultString : string;
   disp : boolean;
+  radiusSize : number;
+  result : Result;
 
   constructor(private http: HttpClient) { }
 
@@ -34,6 +38,8 @@ export class MapDisplayComponent implements OnInit {
 
   onClickGo() {
     this.dateString = this.date.getMonth()+1+"/"+this.date.getDate()+"/"+this.date.getFullYear();
+    this.date1String = this.date.getMonth()+1+"/"+(this.date.getDate()+2)+"/"+this.date.getFullYear();
+    this.date2String = this.date.getMonth()+1+"/"+(this.date.getDate()+7)+"/"+this.date.getFullYear();
     this.getConfig().subscribe((data : Result[]) => this.results = data['locations']);
     this.disp = true;
   }
