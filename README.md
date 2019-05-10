@@ -7,48 +7,62 @@ CSE635 Project.
 </p>
 
 
-## TODO list
+										    ---------------
+      											======
+						      					README
+											      ======
+										       Team ADA
+										    ---------------
 
-* Try CatBoost / XGBoost / Neural nets (CNN/ LSTM/ DNN)
-* Add hate speech & violent speech detection
-* Do lit survey for more features
-  * Go back to Terra Blevins paper maybe?
 
-## Current Twitter Results
-|      Location      |   Train Accuracy |   Test Accuracy |   Precision |   Recall |   F1 Score |   +'s in data |
-|:------------------:|-----------------:|----------------:|------------:|---------:|-----------:|--------------:|
-|  Delhi-New Delhi   |             0.97 |            0.82 |        0.82 |     1    |       0.9  |          0.93 |
-|       Jammu        |             1    |            0.82 |        0.82 |     1    |       0.9  |          0.95 |
-|      Amritsar      |             1    |            0.73 |        0.73 |     1    |       0.84 |          0.93 |
-|      Ludhiana      |             0.94 |            0.73 |        0.73 |     1    |       0.84 |          0.88 |
-|      Srinagar      |             1    |            0.73 |        0.73 |     1    |       0.84 |          0.93 |
-|     Bengaluru      |             0.97 |            0.64 |        0.64 |     1    |       0.78 |          0.81 |
-|     Hyderabad      |             0.94 |            0.64 |        0.64 |     1    |       0.78 |          0.86 |
-|      Kolkata       |             1    |            0.64 |        0.64 |     1    |       0.78 |          0.91 |
-|    Bhubaneswar     |             0.94 |            0.55 |        0.55 |     1    |       0.71 |          0.84 |
-|       Patna        |             0.94 |            0.55 |        0.6  |     0.86 |       0.71 |          0.47 |
-|      Agartala      |             1    |            0.55 |        0.62 |     0.71 |       0.67 |          0.74 |
-|     Coimbatore     |             0.94 |            0.55 |        0.5  |     1    |       0.67 |          0.79 |
-|     Ahmedabad      |             1    |            0.73 |        0.5  |     0.67 |       0.57 |          0.44 |
-| Thiruvananthapuram |             0.94 |            0.36 |        0.36 |     1    |       0.53 |          0.79 |
-|     Jalandhar      |             1    |            0.36 |        0.38 |     0.6  |       0.46 |          0.56 |
-|      Bathinda      |             1    |            0.27 |        0.27 |     1    |       0.43 |          0.81 |
-|       Karnal       |             1    |            0.27 |        0.29 |     0.4  |       0.33 |          0.47 |
-|     Chandigarh     |             0.97 |            0.18 |        0.18 |     1    |       0.31 |          0.77 |
-|      Chennai       |             1    |            0.18 |        0.18 |     1    |       0.31 |          0.79 |
-|      Guwahati      |             0.94 |            0.18 |        0.18 |     1    |       0.31 |          0.74 |
-|       Imphal       |             0.97 |            0.18 |        0.18 |     1    |       0.31 |          0.63 |
-|      Patiala       |             1    |            0.45 |        1    |     0.14 |       0.25 |          0.7  |
-|     Puducherry     |             1    |            0.09 |        0.09 |     1    |       0.17 |          0.77 |
-|      Dehradun      |             0.97 |            1    |        0    |     0    |       0    |          0.28 |
-|      Gurgaon       |             0.97 |            0.45 |        0    |     0    |       0    |          0.23 |
-|       Jaipur       |             0.84 |            0.55 |        0    |     0    |       0    |          0.26 |
-|      Lucknow       |             0.97 |            0.45 |        0    |     0    |       0    |          0.53 |
-|      Madurai       |             1    |            1    |        0    |     0    |       0    |          0.47 |
-|      Pulwama       |             1    |            0    |        0    |     0    |       0    |          0.49 |
-|       Ranchi       |             0.84 |            0.91 |        0    |     0    |       0    |          0.42 |
-|       Salem        |             1    |            0.55 |        0    |     0    |       0    |          0.56 |
-|      Sangrur       |             1    |            0.91 |        0    |     0    |       0    |          0.51 |
-|       Shimla       |             0.78 |            0.27 |        0    |     0    |       0    |          0.26 |
-|  Tiruchirappalli   |             1    |            1    |        0    |     0    |       0    |          0.35 |
-|      Average       |             0.97 |            0.54 |        0.34 |     0.6  |       0.39 |          0.64 |
+
+Data Collection:
+	* TOI data collection:
+		 To collect the TOI dataset follow the steps given below:
+			1. Open TOI/TOI_Scrapper.ipynb using jupyter notebook.
+			2. Enter the start_date and end_date for which article has to be scrapped
+			3. Run all the cells to download the TOI news articles.
+			4. This process can be automated to scrape articles everyday using a cron job in UNIX based operating systems.
+
+
+	* Twitter data collection: 
+		To collect the Twitter dataset follow the steps given below:
+			1. Open twitter/Twitter_Collector_v3.ipynb using jupyter notebook.
+			2. Run all the cells to download Election related Twitter data for the last 7 days.
+			3. Subsequent runs (run after 7 days) will append data to data extracted in step 2.
+			4. This process can be automated to scrape tweets using a cron job in UNIX based operating systems.
+
+
+
+
+Machine Learning Models:
+	* Twitter Models: 
+		In order to run the twitter, goto the nlp_on_tweets.ipynb for visualization as well as getting the results from the deep learning and extra trees model.
+	* Headlines Models:
+		 For obtaining results of the headlines model, run headlines_dataset.ipynb and execute all cells for executing all ML models.
+	* Both datasets use the same underlying python files for computing the sentiment.
+	* Results are provided in a tabular format and with graphs for the continual prediction model.
+
+
+Automation:
+        * We setup cron job to automatically scrape tweets as well as news articles at a specified time of the day. This will also make predictions for all locations and given date and save it in a json
+	file (NLP_on_tweets.ipynb is run). 
+        * The the back-end (flask) will send the cached results every time a request is made for the day or day and city from the front-end (Angular JS).
+
+
+Doc2Vec:
+        * We came across this algorithm in gensim in which we can represent a document as a set of vectors. We tried to use this to use historical data for making predictions.  But any given model is only 	as good as the data which is used for training. We were limited to 50,000 articles and hence the model wasn’t good. But we think that this could be used for 
+
+
+
+
+UI:
+* Frontend: To run the frontend angular app server, follow these steps:
+   * Install node and angular cli, if unavailable in the system.
+   * Navigate to angular_app/violence-pred/ and run the command, `ng serve --open`
+   * This will open the angular app on the default browser (port 4200)
+
+
+* Backend: To run the backend Flask server, follow these steps:
+   * Run all the to initialize and start the server
+   * The server will start on port 5000, and serve the angular app
