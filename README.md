@@ -6,17 +6,8 @@
 CSE635 Project.
 </p>
 
-
-										    ---------------
-      											======
-						      					README
-											      ======
-										       Team ADA
-										    ---------------
-
-
-
 Data Collection:
+
 	* TOI data collection:
 		 To collect the TOI dataset follow the steps given below:
 			1. Open TOI/TOI_Scrapper.ipynb using jupyter notebook.
@@ -36,6 +27,7 @@ Data Collection:
 
 
 Machine Learning Models:
+
 	* Twitter Models: 
 		In order to run the twitter, goto the nlp_on_tweets.ipynb for visualization as well as getting the results from the deep learning and extra trees model.
 	* Headlines Models:
@@ -45,12 +37,14 @@ Machine Learning Models:
 
 
 Automation:
+
         * We setup cron job to automatically scrape tweets as well as news articles at a specified time of the day. This will also make predictions for all locations and given date and save it in a json
 	file (NLP_on_tweets.ipynb is run). 
         * The the back-end (flask) will send the cached results every time a request is made for the day or day and city from the front-end (Angular JS).
 
 
 Doc2Vec:
+
         * We came across this algorithm in gensim in which we can represent a document as a set of vectors. We tried to use this to use historical data for making predictions.  But any given model is only 	as good as the data which is used for training. We were limited to 50,000 articles and hence the model wasn’t good. But we think that this could be used for 
 
 
