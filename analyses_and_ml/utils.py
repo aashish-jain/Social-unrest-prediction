@@ -4,6 +4,43 @@ import pandas as pd
 
 from collections import Counter
 
+acledLocations = ['Jammu',
+'Srinagar',
+'Delhi-New Delhi',
+'Bathinda',
+'Dehradun',
+'Chandigarh',
+'Ludhiana',
+'Amritsar',
+'Imphal',
+'Lucknow',
+'Jalandhar',
+'Kolkata',
+'Guwahati',
+'Chennai',
+'Patiala',
+'Bhubaneswar',
+'Bengaluru',
+'Patna',
+'Jaipur',
+'Coimbatore',
+'Hyderabad',
+'Ranchi',
+'Thiruvananthapuram',
+'Shimla',
+'Sangrur',
+'Ahmedabad',
+'Karnal',
+'Pulwama',
+'Puducherry',
+'Gurgaon',
+'Agartala',
+'Madurai',
+'Tiruchirappalli',
+'Bangkok',
+'Salem',
+]
+
 def get_glove_dict(glove_path="../../glove_vectors/glove.6B.300d.txt"):
     """
     Input - Path to GLoVe txt file, default=300D txt file
@@ -24,7 +61,7 @@ def get_glove_dict(glove_path="../../glove_vectors/glove.6B.300d.txt"):
         word = row[0]
         vector = np.array([float(x) for x in row[1:]])
         d[word] = vector
-    
+
     # Close file pointer
     f.close()
 
@@ -45,7 +82,7 @@ def generate_labels(num_events, lead_days=2, days_window=2):
     Generate labels by using the future events, basically
     look-ahead to create labels. If an event occurs from
     i to i + num_days, then label is 1.0 else 0.0
-    
+
     TODO - Maybe implement this with np.stride_tricks?
     """
 
@@ -70,7 +107,7 @@ def get_cities(df, top_locations):
     # Get Counter for locations in DF
     counter = Counter(df.location)
 
-    # If top_locations is -1, send all 
+    # If top_locations is -1, send all
     if top_locations == -1:
         return list(counter.keys())
 
@@ -108,7 +145,7 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5,
     # As the data is sorted, we can do this -
     if start is None:
         start = df.iloc[0]["event_date"]
-    
+
     if end is None:
         start = df.iloc[-1]["event_date"]
 
@@ -116,9 +153,9 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5,
     if isinstance(start, str):
         start = pd.to_datetime(start)
 
-    if isinstance(end, str):    
+    if isinstance(end, str):
         end = pd.to_datetime(end)
-    
+
     # Chop data with start & end dates
     df = df[df['event_date'] >= start]
     df = df[df['event_date'] <= end]
@@ -145,13 +182,13 @@ def process_acled_csv(path_to_csv, top_locations=10, lead_days=2, days_window=5,
         # Populate the above ndarray for each date
         for i, date in enumerate(dates):
             num_events[i] += len(city_df[city_df['event_date'] == date])
-        
+
         # Generate labels based on lead_days & days_window
         labels = generate_labels(num_events, lead_days, days_window)
 
         # Generate mapping between city & labels
         label_dict[city] = labels
-    
+
     return label_dict
 
 
