@@ -1,6 +1,6 @@
 # Election Violence Prediction
 <p align="center">
-<img src="assets/ada.png" width="300">
+<!-- <img src="assets/ada.png" width="300"> -->
 </p>
 
 This repository consists of code for the CSE 635 project developed [Aashish Jain](https://github.com/aashish-jain), [Ateendra Ramesh](https://github.com/ateexd) and [Daniel Amirtharaj](https://github.com/dani-amirtharaj).
